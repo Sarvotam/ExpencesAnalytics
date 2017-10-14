@@ -1,0 +1,91 @@
+<% provide(:title, "Expenses") %>
+<div class="container">
+	<div class="expense table-margin">
+	<br/>
+		<%= link_to "Add Expense", new_expense_path, 
+				remote: true, class: 'btn sign-up' %>
+
+	<br/>
+		<div id="pie" style="height: 400px"></div>
+	
+	<table id="expense" class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<td>Title</td>
+				<!-- <td>Description</td> -->
+				<td>Tags</td>
+				<td>Amount</td>
+				<td>Date</td>
+			<th colspan="2">Action</th>
+			</tr>
+		</thead>
+
+		<tbody class="expense-index">
+			<% @expenses.each do |expense| %>
+				<tr id="expense-<%= expense.id%>">
+					<td><%= expense.title %></td>
+					<!-- <td><%= expense.description %></td> -->
+					<td><%= expense.category.title %></td>
+					<td class="expenses-text" >- <%=number_with_delimiter(expense.amount, :delimiter => ',')  %></td>
+					<td><%= expense.date %></td>
+					<td><%= link_to "Edit", edit_expense_path(expense), 
+									remote: true, class: 'btn btn-default' %></td>
+					<td><%= link_to "Delete", expense_delete_path(expense), remote: true, class: 'btn btn-danger' %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>
+</div>
+<div id="expense-modal" class="modal fade"></div>
+
+
+<!-- 
+<div id="ajax">
+	<%#= render :template => 'expenses/index' %>
+</div> -->
+
+
+
+<script type="text/javascript">
+
+// for(var i = 0; i < bar.length; i++) {
+//     var bar= bar[i];
+//     for(var j = 0; j < bar.length; j++) {
+//         alert(typeof("bar" + i + "][" + j + "] = " + bar[j]));
+//     }
+// }
+// alert(bar);
+	Highcharts.chart('pie', {
+    chart: {
+        type: 'pie',
+        options3d: {
+            enabled: true,
+            alpha: 45
+        }
+    },
+    title: {
+        text: 'Expenses category'
+    },
+    subtitle: {
+        text: ''
+    },
+    plotOptions: {
+        pie: {
+            innerSize: 100,
+            depth: 45
+        }
+    },
+<% a = 'Banasssssnas'.to_i%>
+<% b = 5 %>
+    series: [{
+        name: 'Delivered amount',
+        data: [<% @expense_category.each do |x,y| %>		
+        ["<%= x%>",<%= y%>],
+			<%end%>]
+    }]
+});
+</script>
+
+
+<%= b.class %>

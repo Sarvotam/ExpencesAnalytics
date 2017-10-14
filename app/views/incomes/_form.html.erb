@@ -1,0 +1,46 @@
+		<%= form_for @income, remote: true, html: { style: "display:inline;" } do |f| %>
+			<div class="modal-body">
+				<ul class="errors"></ul>
+				
+				<div class="form-group">
+					<%= f.hidden_field :member_id, :value => @income.member_id %>
+					</div>
+				<div class="form-group">
+					<%= f.label :title, class: "control-label" %>
+					<%= f.text_field :title, class: 'form-control' %>
+				</div>		
+
+				<div class="form-group">
+					<%= f.label :description, class: "control-label" %>
+					<%= f.text_area :description, class: 'form-control' %>
+				</div>
+
+				<div class="form-group col-md-6">
+					<%= f.label :amount, class: "control-label" %>
+					<%= f.text_field :amount, class: 'form-control' %>
+				</div>
+				<div class="form-group col-md-6">
+					<%= f.label :category_id, class: 'control-label' %>
+					<%= f.collection_select :category_id, current_member.categories.all, :id, :title , class: 'form-control' %>
+					<%= link_to "Add Tag", new_category_path, 
+				remote: true, class: 'btn sign-up' %>
+				</div>
+
+				<div class="form-group">
+					<%= f.label :date, class: 'control-label'  %>
+					<%#= f.date_select(:date, :order => [:month, :day, :year])%>
+					<%#= f.calendar_date_select "date" %>
+					<div class="input-group date", data-provide="datepicker" data-date-format="yyyy/mm/dd">
+						<%= f.text_field :date,:value => Time.now.strftime('%Y/%m/%d') ,  id: "datepicker" %>
+						<div class="input-group-addon">
+							<span class="glyphicon glyphicon-th"></span>
+						</div>
+					</div>
+				</div>
+			</div>	
+
+			<div class="modal-footer">
+				<%= f.submit "Add Income", class: 'btn sign-up' %>
+				<%= link_to "Cancel", '#', class: 'btn', data: {dismiss: "modal"} %>
+			</div>
+		<% end %>
